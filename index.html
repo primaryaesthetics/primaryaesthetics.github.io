@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nikolai Khobotov — algorithm engineering, AI</title>
+<meta name="description" content="Independent researcher and programming educator. Author of logtwothirds: a verified implementation and honest wall-clock study of the 2025 sorting-barrier shortest-path algorithm.">
+<meta property="og:title" content="Nikolai Khobotov — algorithm engineering, AI">
+<meta property="og:description" content="I measure what theory promises. Verified implementation of the sorting-barrier shortest-path breakthrough, within 1.1–1.2× of Dijkstra at n = 10⁶–10⁷.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://primaryaesthetics.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23070b0a'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%235ed29c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Plus+Jakarta+Sans:wght@700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Nikolai Khobotov",
+  "email": "mailto:nicholaask@gmail.com",
+  "url": "https://primaryaesthetics.github.io/",
+  "jobTitle": "Independent researcher",
+  "knowsAbout": ["algorithm engineering", "shortest paths", "Rust", "Python", "machine learning", "quantum computing", "computational biology"],
+  "sameAs": [
+    "https://github.com/primaryaesthetics",
+    "https://orcid.org/0009-0005-3612-830X"
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #070b0a;
+    --accent: #5ed29c;
+    --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* --- background: gradient field + grid + central glow --- */
+  .backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .backdrop .field {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, #070b0a 0%, rgba(7,11,10,0) 45%),
+      linear-gradient(0deg, #070b0a 8%, rgba(7,11,10,0) 55%),
+      radial-gradient(120% 90% at 78% 10%, rgba(20,60,48,.55) 0%, rgba(7,11,10,0) 60%),
+      radial-gradient(90% 70% at 15% 85%, rgba(10,36,30,.5) 0%, rgba(7,11,10,0) 55%);
+  }
+  .backdrop svg.glow { position: absolute; top: -140px; left: 50%; transform: translateX(-50%); width: 1100px; max-width: 160vw; }
+  .gridlines { position: absolute; inset: 0; display: none; }
+  .gridlines span { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,.1); }
+  .gridlines span:nth-child(1) { left: 25%; }
+  .gridlines span:nth-child(2) { left: 50%; }
+  .gridlines span:nth-child(3) { left: 75%; }
+  @media (min-width: 768px) { .gridlines { display: block; } }
+
+  /* --- header --- */
+  header {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px clamp(20px, 5vw, 56px);
+    background: linear-gradient(180deg, rgba(7,11,10,.85), rgba(7,11,10,0));
+  }
+  .logo { display: flex; align-items: center; gap: 10px; color: var(--white); text-decoration: none; font-weight: 800; letter-spacing: .08em; font-size: 15px; }
+  .logo .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  nav.desktop { display: none; gap: 34px; }
+  nav.desktop a { color: var(--white); text-decoration: none; font-size: 16px; transition: color .15s; }
+  nav.desktop a:hover { color: var(--accent); }
+  @media (min-width: 768px) { nav.desktop { display: flex; } .burger { display: none; } }
+  .burger { background: none; border: 0; color: var(--white); cursor: pointer; padding: 6px; }
+  .overlay {
+    position: fixed; inset: 0; z-index: 40; background: rgba(7,11,10,.97);
+    display: none; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+  }
+  .overlay.open { display: flex; }
+  .overlay a { color: var(--white); text-decoration: none; font-size: 24px; font-weight: 600; letter-spacing: .04em; }
+  .overlay a:hover { color: var(--accent); }
+  .overlay .close { position: absolute; top: 24px; right: 24px; background: none; border: 0; color: var(--white); cursor: pointer; padding: 6px; }
+
+  /* --- hero --- */
+  .hero {
+    position: relative; z-index: 10;
+    min-height: calc(100svh - 76px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 40px 20px 80px;
+  }
+
+  /* liquid glass card */
+  .glass {
+    position: relative;
+    width: 200px; height: 200px;
+    transform: translateY(-50px);
+    border-radius: 22px;
+    background: rgba(255,255,255,.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,.1);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    padding: 18px;
+  }
+  .glass::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.06));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  .glass .tag { font-size: 14px; color: var(--accent); letter-spacing: .12em; }
+  .glass h2 { font-size: 18px; font-weight: 600; line-height: 1.3; }
+  .glass h2 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+  .glass p { font-size: 11px; color: rgba(255,255,255,.6); line-height: 1.5; }
+
+  .eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; font-size: 11px; letter-spacing: .22em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em;
+    font-size: clamp(40px, 7vw, 72px);
+    line-height: 1.02; max-width: 900px;
+  }
+  h1 .period { color: var(--accent); }
+  .lede {
+    margin-top: 22px; font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,.7); max-width: 512px;
+  }
+  .cta {
+    margin-top: 34px;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: var(--bg);
+    text-decoration: none; text-transform: uppercase; font-weight: 700; font-size: 13px;
+    letter-spacing: .06em; padding: 15px 28px; border-radius: 999px;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(94,210,156,.25); }
+  .cta svg { transition: transform .15s; }
+  .cta:hover svg { transform: translateX(3px); }
+
+  /* --- sections --- */
+  section { position: relative; z-index: 10; max-width: 880px; margin: 0 auto; padding: 72px 24px; }
+  section + section { border-top: 1px solid rgba(255,255,255,.08); }
+  .kicker { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+  section h3 { font-size: 26px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.01em; }
+  section p { color: rgba(255,255,255,.72); font-size: 15px; line-height: 1.75; max-width: 68ch; }
+  section p + p { margin-top: 14px; }
+  section a { color: var(--accent); text-decoration: none; }
+  section a:hover { text-decoration: underline; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 26px 0; }
+  .stat {
+    border: 1px solid rgba(255,255,255,.1); border-radius: 14px; padding: 18px;
+    background: rgba(255,255,255,.02);
+  }
+  .stat b { display: block; font-size: 24px; font-weight: 800; color: var(--white); }
+  .stat span { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.5; display: block; margin-top: 6px; }
+
+  .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,.16); border-radius: 999px;
+    color: var(--white); font-size: 13px; padding: 10px 18px;
+    transition: border-color .15s, color .15s;
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+  footer { position: relative; z-index: 10; text-align: center; padding: 40px 20px 56px; color: rgba(255,255,255,.4); font-size: 12px; }
+  footer a { color: rgba(255,255,255,.55); }
+</style>
+</head>
+<body>
+
+<div class="backdrop" aria-hidden="true">
+  <div class="field"></div>
+  <svg class="glow" viewBox="0 0 1100 500" fill="none">
+    <defs>
+      <filter id="blur25" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="25"></feGaussianBlur>
+      </filter>
+      <radialGradient id="g" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#2fe0b4" stop-opacity=".34"/>
+        <stop offset="55%" stop-color="#0f5f46" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#070b0a" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <ellipse cx="550" cy="210" rx="480" ry="150" fill="url(#g)" filter="url(#blur25)"/>
+  </svg>
+  <div class="gridlines"><span></span><span></span><span></span></div>
+</div>
+
+<header>
+  <a class="logo" href="#top"><span class="dot"></span>NIKOLAI KHOBOTOV</a>
+  <nav class="desktop">
+    <a href="#project">PROJECT</a>
+    <a href="#about">ABOUT</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+  <button class="burger" aria-label="Open menu" onclick="document.getElementById('m').classList.add('open')">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+  </button>
+</header>
+
+<div class="overlay" id="m">
+  <button class="close" aria-label="Close menu" onclick="document.getElementById('m').classList.remove('open')">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+  <a href="#project" onclick="document.getElementById('m').classList.remove('open')">PROJECT</a>
+  <a href="#about" onclick="document.getElementById('m').classList.remove('open')">ABOUT</a>
+  <a href="#contact" onclick="document.getElementById('m').classList.remove('open')">CONTACT</a>
+</div>
+
+<main id="top">
+  <div class="hero">
+    <div class="glass">
+      <div class="tag">[ 2026 ]</div>
+      <h2>Verified by <em>measurement</em></h2>
+      <p>logtwothirds v0.1.0<br>DOI 10.5281/zenodo.21284462</p>
+    </div>
+
+    <div class="eyebrow">Independent researcher · Algorithm engineering</div>
+    <h1>I measure what theory promises<span class="period">.</span></h1>
+    <p class="lede">
+      In 2025 a new shortest-path algorithm broke the sixty-year-old sorting
+      barrier. I implemented it, verified it bit-for-bit against the paper,
+      and measured it honestly against Dijkstra — all the way down to a
+      1.1–1.2× gap and a crossover no physical computer will ever reach.
+    </p>
+    <a class="cta" href="https://github.com/primaryaesthetics/logtwothirds">
+      View the research
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+
+  <section id="project">
+    <div class="kicker">Project</div>
+    <h3>logtwothirds — the sorting barrier, measured</h3>
+    <p>
+      Duan, Mao, Mao, Shu and Yin's <em>O(m&thinsp;log<sup>2/3</sup>&thinsp;n)</em>
+      algorithm (STOC 2025) computes shortest paths asymptotically faster than
+      Dijkstra. The theory leaves one question open: does it actually run
+      faster? <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a>
+      is a Rust library with Python bindings built to answer that — a faithful
+      implementation verified bit-for-bit against an audited reference
+      (distances <em>and</em> settlement order), an engineered variant family,
+      and a full benchmark record.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>1.10–1.20×</b><span>engineered BMSSP vs optimized Dijkstra at n&nbsp;=&nbsp;10⁶–10⁷ — the smallest published gap</span></div>
+      <div class="stat"><b>26–128×</b><span>the faithful implementation's gap, narrowing with n at the predicted rate</span></div>
+      <div class="stat"><b>n ≈ 2<sup>400 000</sup></b><span>extrapolated crossover — beyond any physically storable input</span></div>
+      <div class="stat"><b>520+</b><span>adversarial graphs in the bit-exact correctness gate</span></div>
+    </div>
+    <p>
+      The verdict is a negative result, stated without spin: the asymptotic
+      advantage is real, and no practical input size realizes it. Along the
+      way the study caught an implementation pitfall in the paper's
+      relax-on-equality rule — a duplicate cascade that random float-weighted
+      tests cannot detect and a real road network triggers immediately.
+    </p>
+    <div class="links">
+      <a href="https://github.com/primaryaesthetics/logtwothirds">GitHub</a>
+      <a href="https://pypi.org/project/logtwothirds/">PyPI — pip install logtwothirds</a>
+      <a href="https://doi.org/10.5281/zenodo.21284462">Zenodo DOI</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="kicker">About</div>
+    <h3>Engineer, educator, fast learner</h3>
+    <p>
+      I teach programming — Python, AI, C#, game development — and before that
+      I translated and proofread scientific and patent literature in physics
+      and computer science. My background is a physics-and-math education
+      (Peter the Great St. Petersburg Polytechnic University), and my working
+      style is the one this research shows: read the primary source, build the
+      thing, verify it rigorously, and report what the measurements actually say.
+    </p>
+    <p>
+      I'm looking for a role in AI — research or engineering. The problems
+      that pull me are the frontier ones: new models and methods, quantum
+      computing, computational biology.
+    </p>
+  </section>
+
+  <section id="contact">
+    <div class="kicker">Contact</div>
+    <h3>Get in touch</h3>
+    <p>The fastest way is email; everything I publish is linked below.</p>
+    <div class="links">
+      <a href="mailto:nicholaask@gmail.com">nicholaask@gmail.com</a>
+      <a href="https://github.com/primaryaesthetics">GitHub</a>
+      <a href="https://orcid.org/0009-0005-3612-830X">ORCID 0009-0005-3612-830X</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Nikolai Khobotov · <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a> · MIT-licensed research
+</footer>
+
+</body>
+</html>
