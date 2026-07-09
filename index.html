@@ -156,7 +156,7 @@
   .cta:hover svg { transform: translateX(3px); }
 
   /* --- sections --- */
-  section { position: relative; z-index: 10; max-width: 880px; margin: 0 auto; padding: 72px 24px; }
+  section { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 72px clamp(20px, 4.5vw, 52px); }
   section + section { border-top: 1px solid rgba(255,255,255,.08); }
   .kicker { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
   section h3 { font-size: 26px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.01em; }
@@ -208,7 +208,7 @@
 </div>
 
 <header>
-  <a class="logo" href="#top"><span class="dot"></span>NIKOLAI KHOBOTOV</a>
+  <a class="logo" href="#top"><span class="dot"></span>Khobotov Nikolai</a>
   <nav class="desktop">
     <a href="#project">PROJECT</a>
     <a href="#about">ABOUT</a>
@@ -330,7 +330,6 @@
   var c = document.getElementById('bg');
   var x = c.getContext('2d');
   var W, H, bars;
-  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function make() {
     var n = Math.round(W / 22);
@@ -398,7 +397,7 @@
 
   addEventListener('resize', resize);
   resize();
-  if (reduced) { draw(1200); } else { requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
 })();
 </script>
 
