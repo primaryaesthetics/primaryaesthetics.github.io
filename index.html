@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nikolai Khobotov — algorithm engineering, AI</title>
-<meta name="description" content="Independent researcher and programming educator. Author of logtwothirds: a verified implementation and honest wall-clock study of the 2025 sorting-barrier shortest-path algorithm.">
+<meta name="description" content="Independent researcher and programming educator. First implementation and audit of the 2026 Duan–Mao–Shu–Yin shortest-path algorithm (found a false clause in a load-bearing lemma), and a verified study of its 2025 sorting-barrier predecessor.">
 <meta property="og:title" content="Nikolai Khobotov — algorithm engineering, AI">
-<meta property="og:description" content="I measure what theory promises. Verified implementation of the sorting-barrier shortest-path breakthrough, within 1.1–1.2× of Dijkstra at n = 10⁶–10⁷.">
+<meta property="og:description" content="I measure what theory promises. First implementation of the 2026 shortest-path successor algorithm: not faster than Dijkstra, and one of its proofs does not hold.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://primaryaesthetics.github.io/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23070b0a'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%23f0ab8c'/%3E%3C/svg%3E">
@@ -36,6 +36,9 @@
     --bg-vis: .8;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* invisible on screen, present for copy/parsers so exponents read as
+     powers ("log^2/3") instead of concatenated digits */
+  .caret { font-size: 0; }
   html { scroll-behavior: smooth; }
   body {
     background: var(--bg);
@@ -236,7 +239,7 @@
 <header>
   <a class="logo" href="#top"><img class="avatar" src="avatar.jpg" alt="">Nikolai Khobotov</a>
   <nav class="desktop">
-    <a href="#project">PROJECT</a>
+    <a href="#project">PROJECTS</a>
     <a href="#about">ABOUT</a>
     <a href="#contact">CONTACT</a>
   </nav>
@@ -250,7 +253,7 @@
   <button class="close" aria-label="Close menu" onclick="document.getElementById('m').classList.remove('open')">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
   </button>
-  <a href="#project" onclick="document.getElementById('m').classList.remove('open')">PROJECT</a>
+  <a href="#project" onclick="document.getElementById('m').classList.remove('open')">PROJECTS</a>
   <a href="#about" onclick="document.getElementById('m').classList.remove('open')">ABOUT</a>
   <a href="#contact" onclick="document.getElementById('m').classList.remove('open')">CONTACT</a>
 </div>
@@ -260,7 +263,7 @@
     <div class="glass">
       <div class="tag">[ 2026 ]</div>
       <h2>Verified by <em>measurement</em>,<br>not assertion</h2>
-      <p>logtwothirds v0.1.0: the sorting-barrier algorithm, measured honestly against Dijkstra. DOI 10.5281/zenodo.21284462.</p>
+      <p>beyond-dijkstra v0.1.0: the first implementation of the 2026 successor algorithm, measured and audited down to a false lemma. DOI 10.5281/zenodo.21473443.</p>
       <a class="arrow" href="#project" aria-label="About the project">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -271,11 +274,14 @@
       <h1>I measure what<br>theory promises<span class="period">.</span></h1>
       <p class="lede">
         In 2025 a new shortest-path algorithm broke the sixty-year-old sorting
-        barrier. I implemented it, verified it bit-for-bit against the paper,
-        and measured it honestly against Dijkstra, all the way down to a
-        1.1–1.2× gap and a crossover no physical computer will ever reach.
+        barrier; in 2026 its authors published a faster successor. I implemented
+        both — the successor for the first time anywhere — verified them
+        bit-for-bit against the papers, and measured them honestly against
+        Dijkstra. The second study went further: it found a counterexample to
+        the completeness clause of the paper's central lemma, and proved by
+        hand what the repaired engine actually guarantees.
       </p>
-      <a class="cta" href="https://github.com/primaryaesthetics/logtwothirds">
+      <a class="cta" href="https://github.com/primaryaesthetics/beyond-dijkstra">
         View the research
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -283,10 +289,44 @@
   </div>
 
   <section id="project">
-    <div class="kicker">Project</div>
+    <div class="kicker">Project · 2026</div>
+    <h3>beyond-dijkstra — the successor algorithm, implemented first and audited</h3>
+    <p>
+      In February 2026 Duan, Mao, Shu and Yin sharpened their own
+      sorting-barrier result to
+      <em>O(m&thinsp;&radic;(log&thinsp;n&thinsp;&middot;&thinsp;log&thinsp;log&thinsp;n))</em>.
+      Pure theory, no implementation anywhere.
+      <a href="https://github.com/primaryaesthetics/beyond-dijkstra">beyond-dijkstra</a>
+      is the first: a Rust port gated bit-for-bit against an audited Python
+      reference, a fifteen-entry audit of the paper's proofs against the
+      running code, and a hand-proved completeness theorem for the repaired
+      engine. The audit found two pseudocode crashes on ordinary graphs and a
+      counterexample to the completeness clause of Lemma 3.7 — the clause
+      that licenses the most standard optimization there is, and a variant
+      that trusts it returns a wrong distance.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>1.8–2.2×</b><span>best engineered variant vs optimized Dijkstra; what remains is Dijkstra carrying the paper's labels</span></div>
+      <div class="stat"><b>38–182×</b><span>the faithful implementation's gap across random graphs and a road network</span></div>
+      <div class="stat"><b>70 vertices</b><span>the counterexample graph: a lemma-trusting variant returns 23.59375 for a true 23.546875</span></div>
+      <div class="stat"><b>n &lt; 2⁴⁰⁹⁶</b><span>below this size the paper's parameter prescription violates its own validity condition</span></div>
+    </div>
+    <p>
+      The algorithm computed exact distances on every input run; one of the
+      proofs that it must does not hold. Both halves of that verdict, and the
+      repair with its proof, rest on the same public verification record.
+    </p>
+    <div class="links">
+      <a href="https://github.com/primaryaesthetics/beyond-dijkstra">GitHub</a>
+      <a href="https://doi.org/10.5281/zenodo.21473443">Zenodo DOI</a>
+    </div>
+  </section>
+
+  <section id="project-logtwothirds">
+    <div class="kicker">Project · 2025–2026</div>
     <h3>logtwothirds — the sorting barrier, measured</h3>
     <p>
-      Duan, Mao, Mao, Shu and Yin's <em>O(m&thinsp;log<sup>2/3</sup>&thinsp;n)</em>
+      Duan, Mao, Mao, Shu and Yin's <em>O(m&thinsp;log<span class="caret">^</span><sup>2/3</sup>&thinsp;n)</em>
       algorithm (STOC 2025) computes shortest paths asymptotically faster than
       Dijkstra. The theory leaves one question open: does it actually run
       faster? <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a>
@@ -298,7 +338,7 @@
     <div class="stats">
       <div class="stat"><b>1.10–1.20×</b><span>engineered BMSSP vs optimized Dijkstra at n&nbsp;=&nbsp;10⁶–10⁷, the smallest published gap</span></div>
       <div class="stat"><b>26–128×</b><span>the faithful implementation's gap, narrowing with n at the predicted rate</span></div>
-      <div class="stat"><b>n ≈ 2<sup>400 000</sup></b><span>extrapolated crossover, beyond any physically storable input</span></div>
+      <div class="stat"><b>n ≈ 2⁴⁰⁰&thinsp;⁰⁰⁰</b><span>extrapolated crossover, beyond any physically storable input</span></div>
       <div class="stat"><b>520+</b><span>adversarial graphs in the bit-exact correctness gate</span></div>
     </div>
     <p>
@@ -312,6 +352,7 @@
       <a href="https://github.com/primaryaesthetics/logtwothirds">GitHub</a>
       <a href="https://pypi.org/project/logtwothirds/">PyPI — pip install logtwothirds</a>
       <a href="https://doi.org/10.5281/zenodo.21284462">Zenodo DOI</a>
+      <a href="https://medium.com/@nicholaask/i-implemented-the-algorithm-that-broke-the-sorting-barrier-dijkstra-still-wins-272b31130cba">The story on Medium</a>
     </div>
   </section>
 
@@ -341,12 +382,13 @@
       <a href="mailto:nicholaask@gmail.com">nicholaask@gmail.com</a>
       <a href="https://github.com/primaryaesthetics">GitHub</a>
       <a href="https://orcid.org/0009-0005-3612-830X">ORCID 0009-0005-3612-830X</a>
+      <a href="https://medium.com/@nicholaask">Medium</a>
     </div>
   </section>
 </main>
 
 <footer>
-  Nikolai Khobotov · <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a> · MIT-licensed research
+  Nikolai Khobotov · <a href="https://github.com/primaryaesthetics/beyond-dijkstra">beyond-dijkstra</a> · <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a> · MIT-licensed research
 </footer>
 
 <script>
