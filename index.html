@@ -21,7 +21,7 @@
   "email": "mailto:nicholaask@gmail.com",
   "url": "https://primaryaesthetics.github.io/",
   "jobTitle": "Independent researcher",
-  "knowsAbout": ["algorithm engineering", "shortest paths", "Rust", "Python", "machine learning", "quantum computing", "computational biology"],
+  "knowsAbout": ["credit risk", "probability of default", "model calibration", "population stability index", "tabular foundation models", "algorithm engineering", "shortest paths", "Rust", "Python", "machine learning", "quantum computing", "computational biology"],
   "sameAs": [
     "https://github.com/primaryaesthetics",
     "https://orcid.org/0009-0005-3612-830X"
@@ -239,7 +239,7 @@
 <header>
   <a class="logo" href="#top"><img class="avatar" src="avatar.jpg" alt="">Nikolai Khobotov</a>
   <nav class="desktop">
-    <a href="#project">PROJECTS</a>
+    <a href="#project-outoftime">PROJECTS</a>
     <a href="#about">ABOUT</a>
     <a href="#contact">CONTACT</a>
   </nav>
@@ -253,7 +253,7 @@
   <button class="close" aria-label="Close menu" onclick="document.getElementById('m').classList.remove('open')">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
   </button>
-  <a href="#project" onclick="document.getElementById('m').classList.remove('open')">PROJECTS</a>
+  <a href="#project-outoftime" onclick="document.getElementById('m').classList.remove('open')">PROJECTS</a>
   <a href="#about" onclick="document.getElementById('m').classList.remove('open')">ABOUT</a>
   <a href="#contact" onclick="document.getElementById('m').classList.remove('open')">CONTACT</a>
 </div>
@@ -287,6 +287,47 @@
       </a>
     </div>
   </div>
+
+  <section id="project-outoftime">
+    <div class="kicker">Project · 2026</div>
+    <h3>Out of Time — tabular foundation models on credit default, read the way a bank reads them</h3>
+    <p>
+      The published credit benchmarks find tabular foundation models such as
+      TabPFN and TabICL generally best, on random folds. A bank validates a
+      model out of time: on the loans originated after it was fitted, cohort
+      by cohort, with calibration and population stability read beside
+      discrimination.
+      <a href="https://github.com/primaryaesthetics/out-of-time-tfm-credit">Out of Time</a>
+      does that for TabPFN-3 and TabICLv2 on the origination vintages of
+      Lending Club and Freddie Mac, beside a weight-of-evidence scorecard and a
+      tuned gradient-boosting model, against kill criteria fixed in
+      pre-registrations before any foundation-model run they judge.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>0.656–0.736</b><span>both models' mean probability over the realised default rate on their own Lending Club context rows, at the shipped temperature of 0.9</span></div>
+      <div class="stat"><b>2 books</b><span>Lending Club and Freddie Mac, nine vintage builds on each</span></div>
+      <div class="stat"><b>97.4–97.6%</b><span>no-shift samples in which the published delta-method z-test on the PSI rejects, at a nominal 5% and 10 bins</span></div>
+      <div class="stat"><b>3</b><span>pre-registrations, every change to them a dated amendment beside the text</span></div>
+    </div>
+    <p>
+      The verdict is mixed, and stated as registered. At the temperature the
+      packages ship, both models under-predict default on the very rows they
+      were conditioned on, and the temperature alone removes the gap. On
+      Lending Club no discrimination, calibration or stability kill fires for
+      TabPFN, the calibration one at the margin; for TabICL the calibration
+      kill fires at 0.9 and not at 1.0, its pooled star resting on one build,
+      and the stability kill fires on the oldest builds. Every number traces to a recorded run through a claim ledger.
+      The instrument built for the stability readings is released as
+      <a href="https://github.com/primaryaesthetics/psi-inference">psi-inference</a>.
+    </p>
+    <div class="links">
+      <a href="https://doi.org/10.5281/zenodo.22999138">Paper (Zenodo DOI)</a>
+      <a href="https://github.com/primaryaesthetics/out-of-time-tfm-credit">GitHub</a>
+      <a href="https://doi.org/10.5281/zenodo.22994434">Code DOI</a>
+      <a href="https://doi.org/10.5281/zenodo.22803068">Protocol DOI</a>
+      <a href="https://pypi.org/project/psi-inference/">PyPI — pip install psi-inference</a>
+    </div>
+  </section>
 
   <section id="project">
     <div class="kicker">Project · 2026</div>
@@ -388,7 +429,7 @@
 </main>
 
 <footer>
-  Nikolai Khobotov · <a href="https://github.com/primaryaesthetics/beyond-dijkstra">beyond-dijkstra</a> · <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a> · MIT-licensed research
+  Nikolai Khobotov · <a href="https://github.com/primaryaesthetics/out-of-time-tfm-credit">Out of Time</a> · <a href="https://github.com/primaryaesthetics/psi-inference">psi-inference</a> · <a href="https://github.com/primaryaesthetics/beyond-dijkstra">beyond-dijkstra</a> · <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a> · MIT-licensed research
 </footer>
 
 <script>
