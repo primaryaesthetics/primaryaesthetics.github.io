@@ -300,23 +300,27 @@
       <a href="https://github.com/primaryaesthetics/out-of-time-tfm-credit">Out of Time</a>
       does that for TabPFN-3 and TabICLv2 on the origination vintages of
       Lending Club and Freddie Mac, beside a weight-of-evidence scorecard and a
-      tuned gradient-boosting model, against kill criteria fixed in
-      pre-registrations before any foundation-model run they judge.
+      tuned gradient-boosting model, against kill criteria written before any
+      foundation model was fitted on each book, and deposited after the
+      Lending Club runs and the Freddie Mac fits.
     </p>
     <div class="stats">
       <div class="stat"><b>0.656–0.736</b><span>both models' mean probability over the realised default rate on their own Lending Club context rows, at the shipped temperature of 0.9</span></div>
       <div class="stat"><b>2 books</b><span>Lending Club and Freddie Mac, nine vintage builds on each</span></div>
       <div class="stat"><b>97.4–97.6%</b><span>no-shift samples in which the published delta-method z-test on the PSI rejects, at a nominal 5% and 10 bins</span></div>
-      <div class="stat"><b>3</b><span>pre-registrations, every change to them a dated amendment beside the text</span></div>
+      <div class="stat"><b>3</b><span>pre-registrations, every departure from them dated and listed in the paper</span></div>
     </div>
     <p>
       The verdict is mixed, and stated as registered. At the temperature the
-      packages ship, both models under-predict default on the very rows they
-      were conditioned on, and the temperature alone removes the gap. On
-      Lending Club no discrimination, calibration or stability kill fires for
-      TabPFN, the calibration one at the margin; for TabICL the calibration
-      kill fires at 0.9 and not at 1.0, its pooled star resting on one build,
-      and the stability kill fires on the oldest builds. Every number traces to a recorded run through a claim ledger.
+      packages ship, both models under-predict default on the very Lending
+      Club rows they were conditioned on, and the temperature alone removes
+      the gap there. On Lending Club no discrimination, calibration or
+      stability kill fires for TabPFN, the calibration one at the margin and
+      only on the matrix that keeps the debt-to-income ratio; for TabICL the
+      calibration kill fires at 0.9 and not at 1.0, on a pooling named after
+      the result and resting on one build, and the stability kill fires on the
+      oldest builds against its own context and inverts against an
+      out-of-sample reference. Every number traces to a recorded run through a claim ledger.
       The instrument built for the stability readings is released as
       <a href="https://github.com/primaryaesthetics/psi-inference">psi-inference</a>.
     </p>
