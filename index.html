@@ -21,7 +21,7 @@
   "email": "mailto:nicholaask@gmail.com",
   "url": "https://primaryaesthetics.github.io/",
   "jobTitle": "Independent researcher",
-  "knowsAbout": ["credit risk", "probability of default", "model calibration", "population stability index", "tabular foundation models", "algorithm engineering", "shortest paths", "Rust", "Python", "machine learning", "quantum computing", "computational biology"],
+  "knowsAbout": ["credit risk", "probability of default", "model calibration", "population stability index", "tabular foundation models", "algorithm engineering", "shortest paths", "decision-tree complexity", "comparison-addition model", "Rust", "Python", "machine learning", "quantum computing", "computational biology"],
   "sameAs": [
     "https://github.com/primaryaesthetics",
     "https://orcid.org/0009-0005-3612-830X"
@@ -330,6 +330,44 @@
       <a href="https://doi.org/10.5281/zenodo.22994434">Code DOI</a>
       <a href="https://doi.org/10.5281/zenodo.22803068">Protocol DOI</a>
       <a href="https://pypi.org/project/psi-inference/">PyPI — pip install psi-inference</a>
+      <a href="https://medium.com/@nicholaask/tabpfn-and-tabicl-on-credit-pd-read-out-of-time-30d8e0d3f2cf">The story on Medium</a>
+    </div>
+  </section>
+
+  <section id="project-topologies">
+    <div class="kicker">Project · 2026</div>
+    <h3>distance-only-topologies — exact shortest-path costs on small graphs</h3>
+    <p>
+      Bin Cai's OPT_DIST asks, for one fixed graph shape, how many additions
+      and comparisons a program needs to output every shortest-path distance,
+      with no order required. A family of shapes on which that count grows
+      faster than linear would rule out a linear-time algorithm for directed
+      shortest paths, and none is known.
+      <a href="https://github.com/primaryaesthetics/distance-only-topologies">distance-only-topologies</a>
+      plays Cai's game exactly, with a solver in exact integer arithmetic, on
+      every rooted shape with up to four vertices and on the five-vertex shapes
+      with up to seven arcs, and proves what the tables suggest.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>3k − 3</b><span>exact cost of the cycle fed from the source at every vertex, for k = 2 to 5: Dijkstra's program is optimal there</span></div>
+      <div class="stat"><b>10 vs 14</b><span>comparisons on the fed eight-cycle when additions are free: a record scan with binary search, k − 1 + ⌈log₂ k⌉, against Dijkstra's 2k − 2; proved optimal among comparisons of path sums</span></div>
+      <div class="stat"><b>617 of 619</b><span>small shapes on which a Dijkstra variant with four local rules matches the best path-register program</span></div>
+      <div class="stat"><b>1.55 million</b><span>states in the refutation certificate for the fed four-cycle, accepted by a checker that shares no code with the solver</span></div>
+    </div>
+    <p>
+      No family found grows superlinearly. On the fed cycle the distances alone
+      are cheaper than the order once additions are free, so an algorithm that
+      meets the comparison optimum has to locate the shortest-path tree without
+      ordering the vertices. The values for three and four cycle vertices rest
+      on independently checked certificates; the value for five rests on one
+      exhaustive search, and every number traces to a recorded run through a
+      claim ledger.
+    </p>
+    <div class="links">
+      <a href="https://doi.org/10.5281/zenodo.23483043">Paper (Zenodo DOI)</a>
+      <a href="https://github.com/primaryaesthetics/distance-only-topologies">GitHub</a>
+      <a href="https://doi.org/10.5281/zenodo.23482631">Code DOI</a>
+      <a href="https://medium.com/@nicholaask/on-fed-cycles-up-to-five-vertices-dijkstras-order-is-exactly-optimal-until-additions-are-free-b0e9e2a47fba">The story on Medium</a>
     </div>
   </section>
 
@@ -364,6 +402,7 @@
     <div class="links">
       <a href="https://github.com/primaryaesthetics/beyond-dijkstra">GitHub</a>
       <a href="https://doi.org/10.5281/zenodo.21473443">Zenodo DOI</a>
+      <a href="https://medium.com/@nicholaask/the-lemma-said-this-couldnt-happen-661140fe8667">The story on Medium</a>
     </div>
   </section>
 
@@ -433,7 +472,7 @@
 </main>
 
 <footer>
-  Nikolai Khobotov · <a href="https://github.com/primaryaesthetics/out-of-time-tfm-credit">Out of Time</a> · <a href="https://github.com/primaryaesthetics/psi-inference">psi-inference</a> · <a href="https://github.com/primaryaesthetics/beyond-dijkstra">beyond-dijkstra</a> · <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a> · MIT-licensed research
+  Nikolai Khobotov · <a href="https://github.com/primaryaesthetics/out-of-time-tfm-credit">Out of Time</a> · <a href="https://github.com/primaryaesthetics/psi-inference">psi-inference</a> · <a href="https://github.com/primaryaesthetics/distance-only-topologies">distance-only-topologies</a> · <a href="https://github.com/primaryaesthetics/beyond-dijkstra">beyond-dijkstra</a> · <a href="https://github.com/primaryaesthetics/logtwothirds">logtwothirds</a> · MIT-licensed research
 </footer>
 
 <script>
